@@ -129,3 +129,4 @@ celerybeat.pid
 
 # VS Code
 .vscode/
+.env

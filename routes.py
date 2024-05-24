@@ -2,7 +2,7 @@
 
 from flask_restx import Api, Resource
 from controllers.user_controller import users
-# from controllers.trading_account_controller import tradingaccounts
+from controllers.trading_account_controller import tradingaccounts
 # from controllers.asset_controller import assets
 # from controllers.order_controller import orders
 # from controllers.position_controller import positions
@@ -16,7 +16,7 @@ class Home(Resource):
 
 def initialize_routes(api: Api):
     api.add_namespace(users, path="/users")
-    # api.add_namespace(tradingaccounts, path="/trading-accounts")
+    api.add_namespace(tradingaccounts, path="/trading-accounts")
     # api.add_namespace(assets, path="/assets")
     # api.add_namespace(orders, path="/orders")
     # api.add_namespace(positions, path="/positions")
