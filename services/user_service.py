@@ -51,7 +51,7 @@ class UserService:
             if not check_password_hash(existing_user.get_password(), password):
                 return {'message': 'Invalid password.'}, 400
 
-            return {'message': 'Signed in successfully.', 'token': self.generate_token(identity=email)}, 200
+            return {'message': 'Signed in successfully.','user_id': existing_user.get_id(), 'token': self.generate_token(identity=email)}, 200
         except Exception as e:
             return {'error': 'An error occurred: ' + str(e)}, 500
     
