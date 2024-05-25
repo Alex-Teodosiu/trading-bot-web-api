@@ -1,4 +1,4 @@
-from models.order_model import Order
+from models.orders.order_model import Order
 
 
 class LimitOrder(Order):

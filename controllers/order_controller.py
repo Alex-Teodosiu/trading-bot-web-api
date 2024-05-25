@@ -1,6 +1,6 @@
 from services.order_service import OrderService
-from models.limit_order_model import LimitOrder
-from models.order_model import Order
+from models.orders.limit_order_model import LimitOrder
+from models.orders.order_model import Order
 from flask import request
 from flask_restx import Namespace, Resource
 from flask_restx import Namespace, Resource

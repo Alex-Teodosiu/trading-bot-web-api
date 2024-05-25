@@ -1,6 +1,6 @@
 from alpaca.trading.client import TradingClient
 from alpaca.trading.requests import MarketOrderRequest, LimitOrderRequest
-from models.order_response_model import OrderResponse
+from models.orders.order_response_model import OrderResponse
 from models.cancel_order_response_model import CancelOrderResponse
 from data_access.trading_account_repository import TradingAccountRepository
 import json
