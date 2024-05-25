@@ -41,8 +41,8 @@ class TradingAccountService():
                 return self.get_account_by_credentials(user_id, api_key, api_secret)
             else:
                 return "Account not found"
-        except Exception as e:
-            return str(e)
+        except:
+            return "Account not found"
         
     
     def delete_account(self, user_id, api_key):
