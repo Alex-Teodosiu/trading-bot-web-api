@@ -6,7 +6,7 @@ from services.trading_account_service import TradingAccountService
 from flask_restx import Namespace, Resource
 
 
-tradingaccounts = Namespace('trading_accounts')
+tradingaccounts = Namespace('trading-accounts')
 api = Namespace('api') 
 
 class BaseResource(Resource):

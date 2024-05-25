@@ -5,7 +5,7 @@ from services.market_data_service import MarketDataService
 from flask_restx import Namespace, Resource
 
 
-market_data = Namespace('market_data')
+market_data = Namespace('market-data')
 api = Namespace('api') 
 
 class BaseResource(Resource):
