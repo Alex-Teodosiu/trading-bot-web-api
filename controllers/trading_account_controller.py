@@ -23,6 +23,13 @@ class AccountDetail(BaseResource):
         api_key = request.args.get('api_key')
         secret = request.args.get('secret')
         return self._trading_account_service.get_account_by_credentials(user_id, api_key, secret), 200
+    
+@tradingaccounts.route('/get-account-by-user-id')
+@api.doc(params={'user_id':'User ID is required'})
+class AccountDetail(BaseResource):
+    def get(self):
+        user_id = request.args.get('user_id')
+        return self._trading_account_service.get_account_by_user_id(user_id), 200
 
 
 @tradingaccounts.route('/deleteaccount')

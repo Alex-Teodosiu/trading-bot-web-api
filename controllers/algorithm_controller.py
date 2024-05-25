@@ -7,7 +7,7 @@ from services.algorithms.momentum_algorithm_service import ThreeConsecutiveAlgor
 from services.algorithms.algorithm_service import AlgorithmService
 
 
-algorithm = Namespace('algorithm')
+algorithm = Namespace('algorithms')
 api = Namespace('api') 
 
 class BaseResource(Resource):
