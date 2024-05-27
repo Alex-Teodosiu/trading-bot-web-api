@@ -4,11 +4,13 @@ from datetime import datetime, timedelta, timezone
 from models.orders.order_model import Order
 from ..order_service import OrderService
 from ..trading_account_service import TradingAccountService
+from data_access.algorithm_repository import AlgorithmRepository
 
-class ThreeConsecutiveAlgorithmService:
+class MomentumAlgorithmService:
     def __init__(self):
         self.order_service = OrderService()
         self.trading_account_service = TradingAccountService()
+        self.algorithm_repository = AlgorithmRepository()
 
     def trade_algorithm(self, client, user_id, symbol):
         try:
@@ -32,18 +34,16 @@ class ThreeConsecutiveAlgorithmService:
             print(f"Fetched close prices: {close_prices}")
 
             # Simple momentum strategy
-            if close_prices[-1] > close_prices[-2]:
-            # and close_prices[-2] > close_prices[-3]:
+            if close_prices[-1] > close_prices[-2] and close_prices[-2] > close_prices[-3]:
                 print("!!!Try to sell")
                 order = Order(
                     symbol=symbol,
-                    notional=100,
+                    notional=500,
                     side="sell",
                     time_in_force="day"
                 )
                 response = self.order_service.create_order(user_id, order)
-            elif close_prices[-1] < close_prices[-2]: 
-            # and close_prices[-2] < close_prices[-3]:
+            elif close_prices[-1] < close_prices[-2] and close_prices[-2] < close_prices[-3]:
                 print("try to Buy!!!")
                 order = Order(
                     symbol=symbol,
@@ -62,10 +62,13 @@ class ThreeConsecutiveAlgorithmService:
 
     def run_algorithm(self, user_id, symbol, interval=60):
         trading_account = self.trading_account_service.get_account_by_user_id(user_id)
+        if trading_account == "Account not found" or trading_account is None:
+            return {"error": "No trading account found"}
+        
         api_key = trading_account['api_key']
         secret_key = trading_account['api_secret']
         client = tradeapi.REST(api_key, secret_key, "https://paper-api.alpaca.markets", api_version='v2')
-        while True:
+        while self.algorithm_repository.is_algorithm_running(user_id, symbol, "Momentum"):
             response = self.trade_algorithm(client, user_id, symbol)
             print(response)
             time.sleep(interval)

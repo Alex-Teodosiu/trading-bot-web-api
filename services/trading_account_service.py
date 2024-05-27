@@ -35,9 +35,11 @@ class TradingAccountService():
     def get_account_by_user_id(self, user_id):
         try:
             account = self._trading_account_repository.get_account_by_user_id(user_id)
+            if account is None:
+                return None
+
             if account is not None:
                 _, api_key, api_secret, *_ = account
-                # print(f"API Key: {api_key}, API Secret: {api_secret}")
                 return self.get_account_by_credentials(user_id, api_key, api_secret)
             else:
                 return "Account not found"

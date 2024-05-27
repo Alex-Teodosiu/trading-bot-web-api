@@ -2,11 +2,13 @@ import time
 import alpaca_trade_api as tradeapi
 from ..order_service import OrderService
 from .bollinger_bands import calculate_bollinger_bands
+from data_access.algorithm_repository import AlgorithmRepository
 import pandas as pd
 
 class BollingerAlgorithmService:
     def __init__(self):
         self.order_service = OrderService()
+        self.algorithm_repository = AlgorithmRepository()
 
     def get_historical_data(self, user_id, symbol):
         try:
@@ -49,8 +51,8 @@ class BollingerAlgorithmService:
         except Exception as e:
             return {"error": str(e)}
 
-    def run_algorithm(self, user_id, symbol, qty, interval=60):
-        while True:
-            response = self.trade_algorithm(user_id, symbol, qty)
+    def run_algorithm(self, user_id, symbol, interval=60):
+        while self.algorithm_repository.is_algorithm_running(user_id, symbol, 'Bollinger'):
+            response = self.trade_algorithm(user_id, symbol, 500)
             print(response)
             time.sleep(interval)
