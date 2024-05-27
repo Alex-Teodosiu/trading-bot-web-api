@@ -86,6 +86,13 @@ class UserService:
                     return {'error': 'An error occurred: ' + str(e)}, 500
         except Exception as e:
             return {'error': 'An error occurred: ' + str(e)}, 500
+        
+
+    def get_user_by_email(self, id):
+        user = self._user_repository.get_user_by_email(id)
+        if user is None:
+            return None
+        return user.get_email()
 
 
     def validate_email(self, email):

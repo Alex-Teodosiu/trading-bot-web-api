@@ -74,3 +74,14 @@ class UpdateUser(Resource):
             return response if response else {'message': 'User updated successfully.'}, 200
         except Exception as e:
             return {'error': 'An error occurred: ' + str(e)}, 500
+        
+@users.route('/get-email-by-id/<id>')
+class GetEmailById(Resource):
+    def get(self, id):
+        try:
+            email = user_service.get_user_by_email(id)
+            if email is not None:
+                return email, 200
+            return {'message': 'Email not found.'}, 404
+        except Exception as e:
+            return {'error': 'An error occurred: ' + str(e)}, 500

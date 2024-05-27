@@ -21,7 +21,7 @@ class AlgorithmService:
             algo_created = self.algorithm_repository.save_algorithm_run(algorithm)
             if algorithm.algorithm_name == 'Momentum':
                 threading.Thread(target=self._momentum_algorithm_service.run_algorithm, args=(algorithm.user_id, algorithm.symbol)).start()
-            elif algorithm.algorithm_name == 'Bollinger':
+            elif algorithm.algorithm_name == 'Bollinger Bands':
                 threading.Thread(target=self._bollinger_bands_service.run_algorithm, args=(algorithm.user_id, algorithm.symbol)).start()
         except Exception as e:
             print(e)
@@ -29,7 +29,7 @@ class AlgorithmService:
         
         return algo_created
     
-    
+
     def stop_algorithm(self, user_id, symbol, algorithm_name):
         try:
             return self.algorithm_repository.stop_algorithm(user_id, symbol, algorithm_name)

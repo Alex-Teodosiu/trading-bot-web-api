@@ -31,6 +31,21 @@ class UserRepository:
         return user
     
 
+    def get_user_by_email(self, id):
+        conn = self._db.get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM [user] WHERE ID = ?", id)
+        db_user = cursor.fetchone()
+
+        if db_user is None:
+            return None
+        
+        user = User(db_user[1], db_user[2], db_user[0])
+
+        conn.close()
+        return user
+    
+
     def save_user(self, user):
         conn = self._db.get_db_connection()
         cursor = conn.cursor()
