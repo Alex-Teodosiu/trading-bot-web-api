@@ -57,27 +57,23 @@ class UserRepository:
         conn.close()
 
 
-    def update_user(self, user):
+    def update_user(self, id, password):
         conn = self._db.get_db_connection()
         cursor = conn.cursor()
 
-        cursor.execute("UPDATE [user] SET EMAIL = ?, PASSWORD = ? WHERE id = ?", 
-                       (user.get_email(), user.get_password(), user.get_id()))
+        cursor.execute("UPDATE [user] SET PASSWORD = ? WHERE id = ?", 
+                       (password, id))
 
         conn.commit()
         conn.close()
 
 
-    def delete_user(self, user):
-        print("yooooo")
+    def delete_user(self, user_id):
         conn = self._db.get_db_connection()
         cursor = conn.cursor()
 
-        print("User ID")
-        print(user.get_id())
-        print(user.get_id().lower())
-
-        cursor.execute("DELETE FROM [user] WHERE ID = ?", (user.get_id().lower(),))
+        cursor.execute("DELETE FROM [user] WHERE ID = ?", user_id)
 
         conn.commit()
         conn.close()
+        return True

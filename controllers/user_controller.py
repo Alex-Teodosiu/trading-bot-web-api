@@ -52,12 +52,12 @@ class GetUser(Resource):
 
 @users.route('/deleteuser')
 class DeleteUser(Resource):
-    @users.expect(User)
     def delete(self):
         try:
             data = request.json
-            user = User(data['email'], data['password'])
-            response = user_service.delete_user(user)
+            email = data.get('email')
+            user_id = data.get('id')
+            response = user_service.delete_user(user_id, email)
             return response if response else {'message': 'User deleted successfully.'}, 200
         except Exception as e:
             return {'error': 'An error occurred: ' + str(e)}, 500
@@ -65,15 +65,23 @@ class DeleteUser(Resource):
 
 @users.route('/updateuser')
 class UpdateUser(Resource):
-    @users.expect(User)
     def put(self):
         try:
             data = request.json
-            user = User(data['email'], data['password'], data['id'])
+            email = data.get('email')
+            password = data.get('password')
+            user_id = data.get('id')
+
+            if not all([email, password, user_id]):
+                return {'error': 'Missing email, password or id in the request body'}, 400
+
+            user = User(email, password, user_id)
+            print(user.to_dict())
             response = user_service.update_user(user)
             return response if response else {'message': 'User updated successfully.'}, 200
         except Exception as e:
             return {'error': 'An error occurred: ' + str(e)}, 500
+        
         
 @users.route('/get-email-by-id/<id>')
 class GetEmailById(Resource):

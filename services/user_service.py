@@ -56,34 +56,32 @@ class UserService:
             return {'error': 'An error occurred: ' + str(e)}, 500
     
 
-    def delete_user(self, user):
+    def delete_user(self, user_id, email):
         try:
-            db_user = self._user_repository.get_user_by_email(user.get_email())
+            db_user = self._user_repository.get_user_by_email(email)
             if not db_user:
                 return {'message': 'User not found'}, 404
-            print("user found")
-            print(db_user.id)
-            if check_password_hash(db_user.get_password(), user.get_password()):
-                try:
-                    print("Deleting user")
-                    self._user_repository.delete_user(db_user)
-                    return {'message': 'User deleted successfully'}, 200
-                except Exception as e:
-                    return {'error': 'An error occurred: ' + str(e)}, 500
+            try:
+                print("Deleting user")
+                self._user_repository.delete_user(user_id)
+                return {'message': 'User deleted successfully'}, 200
+            except Exception as e:
+                return {'error': 'An error occurred: ' + str(e)}, 500
         except Exception as e:
             return {'error': 'An error occurred: ' + str(e)}, 500
         
+
     def update_user(self, user):
         try:
             db_user = self._user_repository.get_user_by_email(user.get_email())
             if not db_user:
                 return {'message': 'User not found'}, 404
-            if check_password_hash(db_user.get_password(), user.get_password()):
-                try:
-                    self._user_repository.update_user(user)
-                    return {'message': 'User updated successfully'}, 200
-                except Exception as e:
-                    return {'error': 'An error occurred: ' + str(e)}, 500
+            try:
+                hashed_password = generate_password_hash(user.get_password(), method='pbkdf2:sha256', salt_length=8)
+                self._user_repository.update_user(user.get_email(), user.get_password())
+                return {'message': 'User updated successfully'}, 200
+            except Exception as e:
+                return {'error': 'An error occurred: ' + str(e)}, 500
         except Exception as e:
             return {'error': 'An error occurred: ' + str(e)}, 500
         
