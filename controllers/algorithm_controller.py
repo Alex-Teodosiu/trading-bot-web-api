@@ -5,6 +5,7 @@ from flask_restx import Namespace, Resource
 from services.algorithms.bollinger_algorithm_service import BollingerAlgorithmService
 from services.algorithms.momentum_algorithm_service import ThreeConsecutiveAlgorithmService
 from services.algorithms.algorithm_service import AlgorithmService
+from models.algorithm_model import Algorithm
 
 
 algorithm = Namespace('algorithms')
@@ -16,22 +17,40 @@ class BaseResource(Resource):
         self._algorithm_service = AlgorithmService()
         self._three_consecutive_algorithm_service = ThreeConsecutiveAlgorithmService()
         self._bollinger_bands_service = BollingerAlgorithmService()
-
-
-@algorithm.route('/<int:id>')
-class GetAlgorithmById(BaseResource):
-    def get(self):
-        return self._algorithm_service.get_algorithm_by_id()
     
-@algorithm.route('/get-all-algorithms')
+@algorithm.route('/get-all-algorithms-by-user')
 class GetAllAlgorithms(BaseResource):
     def get(self):
-        return self._algorithm_service.get_all_algorithms()
+        data = request.json
+        user_id = data['user_id']
+        return self._algorithm_service.get_all_algorithms(user_id)
     
-@algorithm.route('/create')
+@algorithm.route('/save-algorithm-run')
 class CreateAlgorithm(BaseResource):
+    @algorithm.expect(Algorithm)
     def post(self):
-        return self._algorithm_service.create_algorithm()
+        data = request.json
+        user_id = data['user_id']
+        algorithm = Algorithm(
+            algorithm_name=data['algorithm_name'],
+            # qty=data['qty'],
+            symbol=data['symbol'],
+            user_id=data['user_id'],
+            time_stamp=data['time_stamp']
+        )
+        print(algorithm.__str__())
+        return self._algorithm_service.create_algorithm(algorithm)
+    
+
+@algorithm.route('/stop-algorithm')
+# uses algorithm_name, user_id, symbol
+class StopAlgorithm(BaseResource):
+    def delete(self):
+        data = request.json
+        user_id = data['user_id']
+        symbol = data['symbol']
+        algorithm_name = data['algorithm_name']
+        return self._algorithm_service.stop_algorithm(user_id, symbol, algorithm_name)
     
     
 ################################################################################### 
