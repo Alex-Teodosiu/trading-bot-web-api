@@ -88,8 +88,8 @@ class UserService:
             return {'error': 'An error occurred: ' + str(e)}, 500
         
 
-    def get_user_by_email(self, id):
-        user = self._user_repository.get_user_by_email(id)
+    def get_user_by_id(self, id):
+        user = self._user_repository.get_user_by_id(id)
         if user is None:
             return None
         return user.get_email()

@@ -79,7 +79,7 @@ class UpdateUser(Resource):
 class GetEmailById(Resource):
     def get(self, id):
         try:
-            email = user_service.get_user_by_email(id)
+            email = user_service.get_user_by_id(id)
             if email is not None:
                 return email, 200
             return {'message': 'Email not found.'}, 404

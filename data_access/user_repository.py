@@ -31,7 +31,7 @@ class UserRepository:
         return user
     
 
-    def get_user_by_email(self, id):
+    def get_user_by_id(self, id):
         conn = self._db.get_db_connection()
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM [user] WHERE ID = ?", id)
