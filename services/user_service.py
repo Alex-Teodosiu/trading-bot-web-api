@@ -76,9 +76,11 @@ class UserService:
             db_user = self._user_repository.get_user_by_email(user.get_email())
             if not db_user:
                 return {'message': 'User not found'}, 404
+            if user.get_id() != db_user.get_id():
+                return {'message': 'User ID does not match'}, 400
             try:
                 hashed_password = generate_password_hash(user.get_password(), method='pbkdf2:sha256', salt_length=8)
-                self._user_repository.update_user(user.get_email(), user.get_password())
+                self._user_repository.update_user(db_user.get_id(), hashed_password)
                 return {'message': 'User updated successfully'}, 200
             except Exception as e:
                 return {'error': 'An error occurred: ' + str(e)}, 500
