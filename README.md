@@ -10,10 +10,6 @@ This is the application tier of the project, designed to facilitate trading acti
 
 ### Features
 
-- **Authentication:** Uses JWT for secure access to the API endpoints.
-- **Trading Operations:** Endpoints to buy, sell, and get information about trades.
-- **Documentation:** Swagger UI for easy exploration of the API.
-
 #### Users
 
 - **DELETE** /users/deleteuser
@@ -89,6 +85,7 @@ This is the application tier of the project, designed to facilitate trading acti
 2. **Activate the virtual environment**
 
 Windows:
+
 .venv\Scripts\activate
 
 Linux and macOS:
@@ -106,11 +103,11 @@ ALPACA_API_KEY=your_alpaca_api_key
 ALPACA_API_SECRET=your_alpaca_api_secret
 JWT_SECRET_KEY=your_jwt_secret_key
 
-5. **Run App**
+### Run App
 
 python app.py
 
 
-5. **Run Tests**
+### Run Tests
 
 python -m unittest discover -s tests
