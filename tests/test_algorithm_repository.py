@@ -24,7 +24,7 @@ class TestAlgorithmRepository(unittest.TestCase):
         self.assertEqual(saved_algorithm['algorithm_name'], 'Algo1')
         self.mock_cursor.execute.assert_called_with(
             "INSERT INTO [algorithm] (ALGORITHM_NAME, SYMBOL, USER_ID, TIME_STAMP) VALUES (?, ?, ?, ?)",
-            (algorithm.algorithm_name, algorithm.symbol, algorithm.user_id, algorithm.time_stamp)
+            (algorithm._algorithm_name, algorithm._symbol, algorithm._user_id, algorithm._time_stamp)
         )
         self.mock_conn.commit.assert_called()
         print("Algorithm run saved successfully")

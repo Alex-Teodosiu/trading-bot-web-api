@@ -16,11 +16,8 @@ class MarketStatus:
             temp_trading_client = TradingClient(api_key, secret_key, paper=True)
         except Exception:
             return("Failed to get trading account for user_id provided.")
-        # get all open positions
         try:
             clock = temp_trading_client.get_clock()
-            print(clock)
-            # print(clock)
         except Exception as e:
             return(json.loads(str(e))['message'])
         print("t")

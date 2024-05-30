@@ -9,7 +9,7 @@ from models.algorithm_model import Algorithm
 
 
 algorithm = Namespace('algorithms')
-api = Namespace('api') 
+# api = Namespace('api') 
 
 class BaseResource(Resource):
     def __init__(self, *args, **kwargs):
@@ -30,7 +30,6 @@ class CreateAlgorithm(BaseResource):
     @algorithm.expect(Algorithm)
     def post(self):
         data = request.json
-        user_id = data['user_id']
         algorithm = Algorithm(
             algorithm_name=data['algorithm_name'],
             # qty=data['qty'],
@@ -43,7 +42,6 @@ class CreateAlgorithm(BaseResource):
     
 
 @algorithm.route('/stop-algorithm')
-# uses algorithm_name, user_id, symbol
 class StopAlgorithm(BaseResource):
     def delete(self):
         data = request.json

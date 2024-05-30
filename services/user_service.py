@@ -126,5 +126,4 @@ class UserService:
             decoded_token = decode_token(token)
             return decoded_token
         except Exception as e:
-            # Handle invalid token error
             return None

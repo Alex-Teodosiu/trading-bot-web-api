@@ -30,7 +30,6 @@ class OrderService():
                     side=order.get_side(),
                     time_in_force=order.get_time_in_force()
                     )
-        # Market order
         try:
             market_order = temp_trading_client.submit_order(order_data=market_order_data)
         except Exception:
@@ -56,7 +55,6 @@ class OrderService():
                     side=order.get_side(),
                     time_in_force=order.get_time_in_force()
                     )
-        # Market order
         try:
             market_order = temp_trading_client.submit_order(order_data=limit_order_data)
         except Exception:

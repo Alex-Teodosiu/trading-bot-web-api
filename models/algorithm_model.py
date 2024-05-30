@@ -1,21 +1,21 @@
 class Algorithm:
     def __init__(self, algorithm_name, symbol, user_id, time_stamp):
-        self.algorithm_name = algorithm_name
-        self.symbol = symbol
-        self.user_id = user_id
-        self.time_stamp = time_stamp
+        self._algorithm_name = algorithm_name
+        self._symbol = symbol
+        self._user_id = user_id
+        self._time_stamp = time_stamp
 
     def get_algorithm_name(self):
-        return self.algorithm_name
+        return self._algorithm_name
     
     def get_symbol(self):
-        return self.symbol
+        return self._symbol
     
     def get_user_id(self):
-        return self.user_id
+        return self._user_id
     
     def get_time_stamp(self):
-        return self.time_stamp
+        return self._time_stamp
 
     def to_dict(self):
         return {
@@ -26,4 +26,4 @@ class Algorithm:
         }
 
     def __str__(self):
-        return f"Algorithm Name: {self.algorithm_name}, Symbol: {self.symbol}, User ID: {self.user_id}, Time Stamp: {self.time_stamp}"
+        return f"Algorithm Name: {self._algorithm_name}, Symbol: {self._symbol}, User ID: {self._user_id}, Time Stamp: {self._time_stamp}"

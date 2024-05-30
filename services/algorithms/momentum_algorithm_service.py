@@ -18,24 +18,20 @@ class MomentumAlgorithmService:
             end_time = datetime.now(tz=timezone.utc)
             start_time = end_time - timedelta(minutes=6)
 
-            # Convert times to RFC3339 format
             end_time_str = end_time.strftime('%Y-%m-%dT%H:%M:%SZ')
             start_time_str = start_time.strftime('%Y-%m-%dT%H:%M:%SZ')
 
-            # Fetch recent market data from IEX feed
             bars = client.get_bars(symbol, tradeapi.TimeFrame.Minute, start=start_time_str, end=end_time_str, feed='iex').df
             print(end_time)
             print(bars)
             if len(bars) < 5:
                 return {"error": "Not enough data to make a decision"}
             
-            # Extract closing prices from the bars
             close_prices = bars['close'].tolist()
             print(f"Fetched close prices: {close_prices}")
 
             # Simple momentum strategy
             if close_prices[-1] > close_prices[-2] and close_prices[-2] > close_prices[-3]:
-                print("!!!Try to sell")
                 order = Order(
                     symbol=symbol,
                     notional=500,
@@ -44,7 +40,6 @@ class MomentumAlgorithmService:
                 )
                 response = self.order_service.create_order(user_id, order)
             elif close_prices[-1] < close_prices[-2] and close_prices[-2] < close_prices[-3]:
-                print("try to Buy!!!")
                 order = Order(
                     symbol=symbol,
                     notional=100,
