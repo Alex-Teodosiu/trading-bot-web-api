@@ -2,7 +2,7 @@
 
 This is a Flask-based web API for an automated trading bot. The application provides the many endpoints that are documented using Swagger UI.
 
-The application is hosted on Azure Web Services and can be accessed at: [Automated Trading Bot Server](https://automated-trading-bot-server.azurewebsites.net/)
+The application is no longer hosted due to avoid costs.
 
 ## Description
 
